@@ -9,8 +9,26 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
+    @recipe.ingredients.build
+    @recipe.ingredients.build
+
   end
 
   def create
+    # binding.pry
+    Recipe.create(ingredient_params)
+    redirect_to recipes_path
+
   end
+
+  def ingredient_params
+    params.require(:recipe).permit(
+      :title,
+      ingredients_attributes: [
+        :name ,
+        :quantity
+      ]
+    )
+  end
+
 end
